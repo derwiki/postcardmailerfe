@@ -4,6 +4,7 @@ import './App.css';
 import SignupComponent from './components/SignupComponent';
 import SigninComponent from './components/SigninComponent';
 import AboutComponent from './components/AboutComponent';
+import PhotoUploadComponent from './components/PhotoUploadComponent';
 
 const headers = {
   "Access-Control-Allow-Origin": "*",
@@ -67,6 +68,7 @@ const App = () => {
         </Row>
       </Container>
       <Container>
+        <PhotoUploadComponent />
         <SignupComponent />
         <SigninComponent />
         <AboutComponent />
