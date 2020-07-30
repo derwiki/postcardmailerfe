@@ -11,7 +11,10 @@ class PhotoUploadComponent extends React.Component<any, any> {
     handleClick(ev: any) {
         console.log('in handleClick');
         ev.preventDefault();
-        uploadPhoto();
+        const photoUrl = uploadPhoto();
+        // @ts-ignore
+        window.photoUrl = photoUrl;
+        console.log(`photoUrl`, photoUrl);
     };
 
     render() {

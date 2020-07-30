@@ -25,6 +25,14 @@ const uuidv4 = () => {
       return v.toString(16);
     });
 }
+const extensionToMimeType: { [extension: string]: string} = {
+    'jpg': 'image/jpeg',
+    'jpeg': 'image/jpeg',
+    'jpe': 'image/jpeg',
+    'tif': 'image/tiff',
+    'tiff': 'image/tiff',
+    'png': 'image/png'
+}
 
 const uploadPhoto = () => {
     // @ts-ignore
@@ -36,22 +44,25 @@ const uploadPhoto = () => {
     }
     const file = files[0];
     const { name } = file;
-    const suffix = name.split('.').pop();
+    const suffix = name.split('.').pop().toLowerCase();
     const uuid = uuidv4();
     const photoKey = `staging/${uuid}.${suffix}`;
+    // TODO(derwiki) either change this to
+    //const photoUrl = `http://assets.postcardmailer.us/${photoKey}`
+    const photoUrl = `https://s3.amazonaws.com/assets.postcardmailer.us/${photoKey}`
   
     // Use S3 ManagedUpload class as it supports multipart uploads
     console.log("uploading file");
-    var upload = new AWS.S3.ManagedUpload({
-      params: {
+    const params = {
         Bucket: albumBucketName,
         Key: photoKey,
         Body: file,
-        ACL: "public-read"
-      }
-    });
-  
-    var promise = upload.promise();
+        ACL: "public-read",
+        ContentType: extensionToMimeType[suffix]
+    };
+    console.log('params', params);
+    const upload = new AWS.S3.ManagedUpload({ params });
+    const promise = upload.promise();
   
     promise.then(
       function(data) {
@@ -61,6 +72,7 @@ const uploadPhoto = () => {
         return console.log("There was an error uploading your photo: ", err.message);
       }
     );
+    return photoUrl;
   }
 
 export default uploadPhoto;
