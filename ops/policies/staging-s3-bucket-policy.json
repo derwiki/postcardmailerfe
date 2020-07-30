@@ -1,0 +1,20 @@
+{
+    "Id": "Policy1596079366350",
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "Stmt1596079361997",
+            "Action": [
+                "s3:PutObject",
+                "s3:PutObjectAcl"
+            ],
+            "Effect": "Allow",
+            "Resource": "arn:aws:s3:::assets.postcardmailer.us/*",
+            "Principal": {
+                "AWS": [
+                    "arn:aws:iam::427399211077:role/Cognito_assetspostcardmailerusUnauth_Role"
+                ]
+            }
+        }
+    ]
+}
