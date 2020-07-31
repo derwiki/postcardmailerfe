@@ -7,7 +7,7 @@ import PhotoUploadComponent from "./PhotoUploadComponent";
 class SignupNameAddressComponent extends React.Component<any, any> {
     constructor(props: any) {
         super(props);
-        this.state = {};
+        this.state = props.state;
     }
 
 
@@ -137,6 +137,7 @@ class SignupComponent extends React.Component {
             from_city: 'San Francisco',
             from_state: 'CA',
             from_postal_code: '94107',
+            message: 'Hello world',
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleFormChange = this.handleFormChange.bind(this);
