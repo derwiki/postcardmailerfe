@@ -256,11 +256,12 @@ class SignupComponent extends React.Component {
             "Access-Control-Allow-Headers": "access-control-allow-origin, access-control-allow-headers",
         }
 
-        const postcardPreviewPostSuccess = (response: any) => {
-            const respJson = response.json();
+        const postcardPreviewPostSuccess = (resp: any) => {
+            const respJson = resp.json();
+            // this is a promise, but I want the resolved value
             console.log('success', respJson);
-            const dmResp = JSON.parse(respJson["0"]);
-            console.log('success dmResp', dmResp);
+            const { RenderedPdf } = respJson['Successes'][0];
+            console.log('success RenderedPdf', RenderedPdf);
         }
 
         const postcardPreviewPost = (request: any) => {
@@ -268,7 +269,7 @@ class SignupComponent extends React.Component {
               method: 'POST',
               body: JSON.stringify(request),
               headers
-            }).then(postcardPreviewPostSuccess)
+            }).then(resp => postcardPreviewPostSuccess(resp))
               .catch(resp => console.error('catch', resp));
         }
         postcardPreviewPost(request);
