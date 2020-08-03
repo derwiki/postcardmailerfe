@@ -1,4 +1,5 @@
 import AWS from 'aws-sdk';
+import { exception } from 'console';
 
 const albumBucketName = "assets.postcardmailer.us";
 const bucketRegion = "us-east-1";
@@ -34,13 +35,19 @@ const extensionToMimeType: { [extension: string]: string} = {
     'png': 'image/png'
 }
 
-const uploadPhoto = () => {
+interface UploadPhoto {
+  photoUrl: string;
+  managedUpload: any;
+}
+
+const uploadPhoto = (): UploadPhoto => {
     // @ts-ignore
     const photoupload = document.getElementById("photoupload");
     // @ts-ignore
     const files  = photoupload.files;
     if (!files.length) {
-      return alert("Please choose a file to upload first.");
+      // @ts-ignore
+      throw `Please choose a file to upload first`;
     }
     const file = files[0];
     const { name } = file;
@@ -52,7 +59,6 @@ const uploadPhoto = () => {
     const photoUrl = `https://s3.amazonaws.com/assets.postcardmailer.us/${photoKey}`
   
     // Use S3 ManagedUpload class as it supports multipart uploads
-    console.log("uploading file");
     const params = {
         Bucket: albumBucketName,
         Key: photoKey,
@@ -60,19 +66,9 @@ const uploadPhoto = () => {
         ACL: "public-read",
         ContentType: extensionToMimeType[suffix]
     };
-    console.log('params', params);
-    const upload = new AWS.S3.ManagedUpload({ params });
-    const promise = upload.promise();
-  
-    promise.then(
-      function(data) {
-        console.log("Successfully uploaded photo.");
-      },
-      function(err) {
-        return console.log("There was an error uploading your photo: ", err.message);
-      }
-    );
-    return photoUrl;
+    const managedUpload = new AWS.S3.ManagedUpload({ params });
+
+    return {photoUrl, managedUpload};
   }
 
 export default uploadPhoto;

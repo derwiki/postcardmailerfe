@@ -1,5 +1,5 @@
 import React from "react"
-import { Row, Col } from 'reactstrap';
+import { Row, Col, Spinner } from 'reactstrap';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import PhotoUploadComponent from "./PhotoUploadComponent";
 
@@ -7,7 +7,10 @@ import PhotoUploadComponent from "./PhotoUploadComponent";
 class SignupNameAddressComponent extends React.Component<any, any> {
     constructor(props: any) {
         super(props);
-        this.state = props.state;
+        this.state = {
+            previewRendering: false,
+            ...props.state,
+        }
     }
 
 
@@ -137,7 +140,7 @@ class SignupComponent extends React.Component {
             from_city: 'San Francisco',
             from_state: 'CA',
             from_postal_code: '94107',
-            message: 'Hello world',
+            message: 'Small batch trust fund chambray vaporware lumbersexual deep v. Vaporware hexagon post-ironic pour-over green juice sustainable intelligentsia tbh tilde organic normcore cliche hoodie air plant mustache. Butcher iPhone post-ironic lo-fi tacos, tumeric neutra vaporware 8-bit activated charcoal tumblr leggings copper mug aesthetic meh.',
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleFormChange = this.handleFormChange.bind(this);
@@ -265,7 +268,7 @@ class SignupComponent extends React.Component {
                 const backThumbnail = BackThumbnails.Large;
                 const frontThumbnail = FrontThumbnails.Large;
                 const renderedPdf = RenderedPdf;
-                setTimeout(() => this.setState({ backThumbnail, frontThumbnail, renderedPdf }), 500);
+                setTimeout(() => this.setState({ backThumbnail, frontThumbnail, renderedPdf, previewRendering: false }), 1500);
                 console.log('success backThumbnail', backThumbnail);
                 console.log('success frontThumbnail', frontThumbnail);
             })
@@ -279,6 +282,7 @@ class SignupComponent extends React.Component {
             }).then(resp => postcardPreviewPostSuccess(resp))
               .catch(resp => console.error('catch', resp));
         }
+        this.setState({previewRendering: true});
         postcardPreviewPost(request);
     }
 
@@ -296,12 +300,23 @@ class SignupComponent extends React.Component {
         // @ts-ignore
         const { backThumbnail, frontThumbnail, renderedPdf } = this.state;
         const maybePreview = backThumbnail && frontThumbnail ? (
-            <div>
-                <img src={backThumbnail}></img>
-                <img src={frontThumbnail}></img>
-                <embed src={renderedPdf} width="500" height="375" />
-            </div>
-        ) : null
+            <>
+                <div>
+                    <img src={backThumbnail}></img>
+                </div>
+                <div>
+                    <img src={frontThumbnail}></img>
+                </div>
+            </>
+        ) : null;
+        // @ts-ignore
+        const maybePreviewRendering = this.state.previewRendering ? (
+            <Spinner color="primary" />
+        ) : null;
+
+        const sendIt = backThumbnail && frontThumbnail ? (
+            <Button color="primary" size="xl" className="mt-3">Send Now »</Button>
+        ) : null;
 
         return (
             <Form className='w-100' onSubmit={(values) => { this.handleSubmit(values) }} >
@@ -309,7 +324,7 @@ class SignupComponent extends React.Component {
                 <SignupNameAddressComponent labelPrefix={"Recipient's"} formPrefix={"to"} state={this.state} handleFormChange={this.handleFormChange}/>
                 <Row>
                     <Col className='col-xl-3 offset-xl-3 col-lg-4 offset-lg-2 col-md-4 offset-md-2 text-left pl-0'>
-                        <PhotoUploadComponent onChange={this.handleFormChange} />
+                        <PhotoUploadComponent onChange={this.handleFormChange} state={this.state} />
                     </Col>
                 </Row>
                 <Row>
@@ -320,12 +335,19 @@ class SignupComponent extends React.Component {
                 </Row>
                 <Row>
                     <Col className='col-xl-3 offset-xl-3 col-lg-4 offset-lg-2 col-md-4 offset-md-2 text-left pl-0'>
-                        <Button color="secondary" size="xl">Preview »</Button>
+                        <Button color="secondary" size="xl" className="mt-3">Preview »</Button>
                     </Col>
                 </Row>
-                {maybePreview}
                 <Row>
-
+                    <Col className='col-xl-3 offset-xl-3 col-lg-4 offset-lg-2 col-md-4 offset-md-2 text-left pl-0 mt-3'>
+                        {maybePreviewRendering}
+                        {maybePreview}
+                    </Col>
+                </Row>
+                <Row>
+                    <Col className='col-xl-3 offset-xl-3 col-lg-4 offset-lg-2 col-md-4 offset-md-2 text-left pl-0'>
+                        {sendIt}
+                    </Col>
                 </Row>
             </Form>
         );
