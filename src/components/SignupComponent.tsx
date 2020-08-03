@@ -258,11 +258,17 @@ class SignupComponent extends React.Component {
         }
 
         const postcardPreviewPostSuccess = (resp: any) => {
-            const respJson = resp.json();
-            // this is a promise, but I want the resolved value
-            console.log('success', respJson);
-            const { RenderedPdf } = respJson['Successes'][0];
-            console.log('success RenderedPdf', RenderedPdf);
+            resp.json().then((r: any) => {
+                console.log('spostcardPreviewPostSuccess', r)
+                const { RenderedPdf, FrontThumbnails, BackThumbnails } = r['Successes'][0];
+                console.log('success RenderedPdf', RenderedPdf);
+                const backThumbnail = BackThumbnails.Large;
+                const frontThumbnail = FrontThumbnails.Large;
+                const renderedPdf = RenderedPdf;
+                setTimeout(() => this.setState({ backThumbnail, frontThumbnail, renderedPdf }), 500);
+                console.log('success backThumbnail', backThumbnail);
+                console.log('success frontThumbnail', frontThumbnail);
+            })
         }
 
         const postcardPreviewPost = (request: any) => {
@@ -285,27 +291,22 @@ class SignupComponent extends React.Component {
     render() {
         // @ts-ignore
         const { message } = this.state;
+        console.log('message', message);
+        console.log('state', this.state);
+        // @ts-ignore
+        const { backThumbnail, frontThumbnail, renderedPdf } = this.state;
+        const maybePreview = backThumbnail && frontThumbnail ? (
+            <div>
+                <img src={backThumbnail}></img>
+                <img src={frontThumbnail}></img>
+                <embed src={renderedPdf} width="500" height="375" />
+            </div>
+        ) : null
 
         return (
             <Form className='w-100' onSubmit={(values) => { this.handleSubmit(values) }} >
                 <SignupNameAddressComponent labelPrefix={"Your"} formPrefix={"from"} state={this.state} handleFormChange={this.handleFormChange}/>
                 <SignupNameAddressComponent labelPrefix={"Recipient's"} formPrefix={"to"} state={this.state} handleFormChange={this.handleFormChange}/>
-                {/*
-                <Row>
-                    <Col className='col-xl-3 offset-xl-3 col-lg-4 offset-lg-2 col-md-4 offset-md-2 text-left pl-0'>
-                        <FormGroup>
-                            <Label for="email">Email</Label>
-                            <Input type="email" name="email" id="signup-email" value={email} onChange={this.handleFormChange} />
-                        </FormGroup>
-                    </Col>
-                    <Col className='col-xl-3 col-lg-4 col-md-4 text-left pr-0'>
-                        <FormGroup>
-                            <Label for="password">Password</Label>
-                            <Input type="password" name="password" id="signup-password" value={password} onChange={this.handleFormChange}/>
-                        </FormGroup>
-                    </Col>
-                </Row>
-                */}
                 <Row>
                     <Col className='col-xl-3 offset-xl-3 col-lg-4 offset-lg-2 col-md-4 offset-md-2 text-left pl-0'>
                         <PhotoUploadComponent onChange={this.handleFormChange} />
@@ -321,6 +322,10 @@ class SignupComponent extends React.Component {
                     <Col className='col-xl-3 offset-xl-3 col-lg-4 offset-lg-2 col-md-4 offset-md-2 text-left pl-0'>
                         <Button color="secondary" size="xl">Preview »</Button>
                     </Col>
+                </Row>
+                {maybePreview}
+                <Row>
+
                 </Row>
             </Form>
         );
