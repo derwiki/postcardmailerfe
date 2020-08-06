@@ -1,5 +1,5 @@
 import React from "react";
-import { Input, Button } from "reactstrap";
+import { Input, Button, Spinner } from "reactstrap";
 import uploadPhoto from "../services/Aws";
 import { ManagedUpload } from "aws-sdk/clients/s3";
 
@@ -51,16 +51,21 @@ class PhotoUploadComponent extends React.Component<any, any> {
         ) : null
 
         return (
-            <div id="photoUploadComponent">
-                <div>
+            <div id="photoUploadComponent" className="mt-3">
+                <div className="mb-3">
                     <Input type="file" name="photoupload" id="photoupload" />
                 </div>
-                <div>
-                    {uploadPercentProgress}
+                <div className="mb-3">
                     {maybePreview}
                 </div>
                 <div>
-                    <Button onClick={this.handleClick} className="mt-3">Upload</Button>
+                    <Button onClick={this.handleClick}>Upload</Button>
+                    {uploadPercentProgress && (
+                        <>
+                            <Spinner color="primary" className='align-middle ml-2' />
+                            <span className='align-baseline ml-2'>{uploadPercentProgress}</span>
+                        </>
+                    )}
                 </div>
             </div>
         )
