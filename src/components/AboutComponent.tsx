@@ -4,7 +4,7 @@ import {Col, Row} from "reactstrap";
 
 const AboutComponent = () => (
     <Row>
-        <Col className="col-xl-6 offset-xl-3 col-lg-8 offset-lg-2 col-md-8 offset-md-2 col-sm-12 text-left field px-0">
+        <Col className="col-xl-6 offset-xl-3 col-lg-8 offset-lg-2 col-md-8 offset-md-2 col-sm-12 text-left field px-1">
             <h2 className="text-center pt-5">About</h2>
             <div>This began as a Mother's Day gift. My mother loves my photos, but hates using computers, smartphones, etc. I created this service to quickly send physical copies of my photos, and then built out the service a little more to also send to nieces and nephews. Today, I regularly send postcards to my family and close friends.</div>
             <h4 className="text-center pt-3">Why not Instagram?</h4>

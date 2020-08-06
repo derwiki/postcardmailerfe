@@ -21,7 +21,7 @@ class SignupNameAddressComponent extends React.Component<any, any> {
         return (
             <>
                 <Row>
-                    <Col className='col-xl-6 offset-xl-3 col-lg-8 offset-lg-2 col-md-8 offset-md-2 col-sm-12 text-left field px-0'>
+                    <Col className='col-xl-6 offset-xl-3 col-lg-8 offset-lg-2 col-md-8 offset-md-2 col-sm-12 text-left field px-1'>
                         <FormGroup>
                             <Label for="name">{labelPrefix} Name</Label>
                             <Input type="text" name={formPrefix + '_name'} id={formPrefix + '_name'} value={this.state[formPrefix + '_name']} className="form-control" placeholder="Ansel Adams" onChange={handleFormChange} />
@@ -29,13 +29,13 @@ class SignupNameAddressComponent extends React.Component<any, any> {
                     </Col>
                 </Row>
                 <Row>
-                <Col className='col-xl-4 offset-xl-3 col-lg-6 offset-lg-2 col-md-6 offset-md-2 col-sm-8 col-8 text-left field pl-0'>
+                <Col className='col-xl-4 offset-xl-3 col-lg-6 offset-lg-2 col-md-6 offset-md-2 col-sm-8 col-8 text-left field px-1'>
                     <FormGroup>
                         <Label for="name">{labelPrefix} Address</Label>
                         <Input type="text" name={formPrefix + '_address1'} id={formPrefix + '_address1'} value={this.state[formPrefix + '_address1']} className="form-control" onChange={handleFormChange} />
                     </FormGroup>
                 </Col>
-                <Col className='col-md-2 col-sm-4 col-4 text-left field px-0'>
+                <Col className='col-md-2 col-sm-4 col-4 text-left field px-1'>
                     <FormGroup>
                         <Label for="name">Unit/Apt</Label>
                         <Input type="text" name={formPrefix + '_address2'} id={formPrefix + '_address2'} value={this.state[formPrefix + '_address2']} className="form-control" onChange={handleFormChange} />
@@ -43,13 +43,13 @@ class SignupNameAddressComponent extends React.Component<any, any> {
                 </Col>
                 </Row>
                 <Row>
-                    <Col className='col-xl-3 offset-xl-3 col-lg-4 offset-lg-2 col-md-4 offset-md-2 col-sm-6 col-12 text-left field pl-0'>
+                    <Col className='col-xl-3 offset-xl-3 col-lg-4 offset-lg-2 col-md-4 offset-md-2 col-sm-6 col-12 text-left field px-1 w-100'>
                         <FormGroup>
                             <Label for="name">City</Label>
                             <Input type="text" name={formPrefix + '_city'} id={formPrefix + '_city'} value={this.state[formPrefix + '_city']}  className="form-control" onChange={handleFormChange} />
                         </FormGroup>
                     </Col>
-                    <Col className='col-md-2 text-left col-sm-4 col-6 field'>
+                    <Col className='col-md-2 text-left col-sm-4 col-6 field px-1'>
                         <FormGroup>
                             <Label for="state">State</Label>
                             <select name={formPrefix + '_state'} id={formPrefix + '_state'} className="form-control" value={this.state[formPrefix + '_state']} onChange={handleFormChange} >
@@ -109,7 +109,7 @@ class SignupNameAddressComponent extends React.Component<any, any> {
                             </select>
                         </FormGroup>
                     </Col>
-                    <Col className='col-xl-1 col-lg-2 col-md-2 text-left col-sm-2 col-6 field pr-0'>
+                    <Col className='col-xl-1 col-lg-2 col-md-2 text-left col-sm-2 col-6 field px-1'>
                         <FormGroup>
                             <Label for="name">Zip</Label>
                             <Input type="text" name={formPrefix + '_postal_code'} id={formPrefix + '_postal_code'} className="form-control" value={this.state[formPrefix + '_postal_code']} onChange={handleFormChange}  />
@@ -323,29 +323,29 @@ class SignupComponent extends React.Component {
                 <SignupNameAddressComponent labelPrefix={"Your"} formPrefix={"from"} state={this.state} handleFormChange={this.handleFormChange}/>
                 <SignupNameAddressComponent labelPrefix={"Recipient's"} formPrefix={"to"} state={this.state} handleFormChange={this.handleFormChange}/>
                 <Row>
-                    <Col className='col-xl-3 offset-xl-3 col-lg-4 offset-lg-2 col-md-4 offset-md-2 text-left pl-0'>
+                    <Col className='col-xl-3 offset-xl-3 col-lg-4 offset-lg-2 col-md-4 offset-md-2 text-left px-1'>
                         <PhotoUploadComponent onChange={this.handleFormChange} state={this.state} />
                     </Col>
                 </Row>
                 <Row>
-                    <Col className='col-xl-3 offset-xl-3 col-lg-4 offset-lg-2 col-md-4 offset-md-2 text-left pl-0'>
+                    <Col className='col-xl-3 offset-xl-3 col-lg-4 offset-lg-2 col-md-4 offset-md-2 text-left px-1'>
                         <Label for="message">Message</Label>
                         <Input type="textarea" name="message" id="message" value={message} onChange={this.handleFormChange}/>
                     </Col>
                 </Row>
                 <Row>
-                    <Col className='col-xl-3 offset-xl-3 col-lg-4 offset-lg-2 col-md-4 offset-md-2 text-left pl-0'>
+                    <Col className='col-xl-3 offset-xl-3 col-lg-4 offset-lg-2 col-md-4 offset-md-2 text-left px-1'>
                         <Button color="secondary" size="xl" className="mt-3">Preview »</Button>
                     </Col>
                 </Row>
                 <Row>
-                    <Col className='col-xl-3 offset-xl-3 col-lg-4 offset-lg-2 col-md-4 offset-md-2 text-left pl-0 mt-3'>
-                        {maybePreviewRendering}
+                    <Col className='col-xl-3 offset-xl-3 col-lg-4 offset-lg-2 col-md-4 offset-md-2 text-left px-1 mt-3'>
                         {maybePreview}
+                        {maybePreviewRendering}
                     </Col>
                 </Row>
                 <Row>
-                    <Col className='col-xl-3 offset-xl-3 col-lg-4 offset-lg-2 col-md-4 offset-md-2 text-left pl-0'>
+                    <Col className='col-xl-3 offset-xl-3 col-lg-4 offset-lg-2 col-md-4 offset-md-2 text-left px-1'>
                         {sendIt}
                     </Col>
                 </Row>
