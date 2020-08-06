@@ -146,14 +146,20 @@ class SignupComponent extends React.Component {
         const postcardPreviewPostSuccess = (resp: any) => {
             resp.json().then((r: any) => {
                 console.log('spostcardPreviewPostSuccess', r)
-                const { RenderedPdf, FrontThumbnails, BackThumbnails } = r['Successes'][0];
-                console.log('success RenderedPdf', RenderedPdf);
-                const backThumbnail = BackThumbnails.Large;
-                const frontThumbnail = FrontThumbnails.Large;
-                const renderedPdf = RenderedPdf;
-                setTimeout(() => this.setState({ backThumbnail, frontThumbnail, renderedPdf, previewRendering: false }), 1500);
-                console.log('success backThumbnail', backThumbnail);
-                console.log('success frontThumbnail', frontThumbnail);
+                if (r.Failures) {
+                    const { Error } = r['Failures'][0];
+                    console.log('failure Error', Error);
+                    this.setState({previewError: Error, previewRendering: false})
+                } else {
+                    const { RenderedPdf, FrontThumbnails, BackThumbnails } = r['Successes'][0];
+                    console.log('success RenderedPdf', RenderedPdf);
+                    const backThumbnail = BackThumbnails.Large;
+                    const frontThumbnail = FrontThumbnails.Large;
+                    const renderedPdf = RenderedPdf;
+                    setTimeout(() => this.setState({ backThumbnail, frontThumbnail, renderedPdf, previewRendering: false }), 1500);
+                    console.log('success backThumbnail', backThumbnail);
+                    console.log('success frontThumbnail', frontThumbnail);
+                }
             })
         }
 
@@ -181,7 +187,7 @@ class SignupComponent extends React.Component {
         console.log('message', message);
         console.log('state', this.state);
         // @ts-ignore
-        const { backThumbnail, frontThumbnail, renderedPdf } = this.state;
+        const { backThumbnail, frontThumbnail, renderedPdf, previewError } = this.state;
         const maybePreview = backThumbnail && frontThumbnail ? (
             <>
                 <div>
@@ -199,6 +205,12 @@ class SignupComponent extends React.Component {
 
         const sendIt = backThumbnail && frontThumbnail ? (
             <Button color="primary" size="xl" className="mt-3">Send Now »</Button>
+        ) : null;
+
+        const maybeError = previewError ? (
+            <div className="alert alert-danger">
+                <div>{previewError.Message}</div>
+            </div>
         ) : null;
 
         return (
@@ -224,7 +236,8 @@ class SignupComponent extends React.Component {
                     </Col>
                 </Row>
                 <Row>
-                    <Col className='col-xl-3 offset-xl-3 col-lg-4 offset-lg-2 col-md-4 offset-md-2 text-left px-1 mt-3'>
+                    <Col className='col-xl-6 offset-xl-3 col-lg-8 offset-lg-2 col-md-8 offset-md-2 col-sm-12 text-left field px-1 mt-2'>
+                        {maybeError}
                         {maybePreview}
                         {maybePreviewRendering}
                     </Col>
