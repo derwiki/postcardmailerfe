@@ -24,9 +24,11 @@ class SigninComponent extends React.Component<any, any> {
     }
 
     handleSubmit(event: any) {
+        const host = 'https://postcardmailerapi.herokuapp.com';
+        const path = '/v1/signin';
         event.preventDefault();
         console.log('Signin state', this.state);
-        fetch('http://localhost:5000/v1/signin', {
+        fetch(`${host}${path}`, {
             method: 'POST',
             body: JSON.stringify(this.state),
             credentials: 'include',
