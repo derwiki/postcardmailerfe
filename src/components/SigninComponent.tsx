@@ -2,6 +2,11 @@ import React from "react"
 import { Row, Col } from 'reactstrap';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 
+const headers = {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Headers": "access-control-allow-origin, access-control-allow-headers",
+}
+
 class SigninComponent extends React.Component<any, any> {
     constructor(props: any) {
         super(props);
@@ -11,11 +16,23 @@ class SigninComponent extends React.Component<any, any> {
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleFormChange = this.handleFormChange.bind(this);
+        this.loginSuccess = this.loginSuccess.bind(this);
     };
+
+    loginSuccess(resp: any) {
+        console.log(resp);
+    }
 
     handleSubmit(event: any) {
         event.preventDefault();
         console.log('Signin state', this.state);
+        fetch('http://localhost:5000/v1/signin', {
+            method: 'POST',
+            body: JSON.stringify(this.state),
+            credentials: 'include',
+            headers
+        }).then(resp => this.loginSuccess(resp))
+            .catch(resp => console.error('catch', resp));
     }
 
     handleFormChange(event: any) {

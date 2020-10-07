@@ -8,6 +8,7 @@ class SignupComponent extends React.Component {
     constructor(props: any) {
         super(props);
         // TODO(derwiki) need to use useState ??
+        /*
         this.state = {
             email: '',
             password: '',
@@ -25,6 +26,8 @@ class SignupComponent extends React.Component {
             from_postal_code: '94107',
             message: 'Small batch trust fund chambray vaporware lumbersexual deep v. Vaporware hexagon post-ironic pour-over green juice sustainable intelligentsia tbh tilde organic normcore cliche hoodie air plant mustache. Butcher iPhone post-ironic lo-fi tacos, tumeric neutra vaporware 8-bit activated charcoal tumblr leggings copper mug aesthetic meh.  Butcher iPhone post-ironic lo-fi tacos, tumeric neutra vaporware 8-bit activated charcoal!',
         };
+        */
+        this.state = {}
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleFormChange = this.handleFormChange.bind(this);
     };
@@ -145,7 +148,7 @@ class SignupComponent extends React.Component {
 
         const postcardPreviewPostSuccess = (resp: any) => {
             resp.json().then((r: any) => {
-                console.log('spostcardPreviewPostSuccess', r)
+                console.log('postcardPreviewPostSuccess', r)
                 if (r.Failures) {
                     const { Error } = r['Failures'][0];
                     console.log('failure Error', Error);
@@ -164,7 +167,8 @@ class SignupComponent extends React.Component {
         }
 
         const postcardPreviewPost = (request: any) => {
-            fetch('https://postcardmailerapi.herokuapp.com/v1/postcard/preview', {
+            fetch('http://localhost:5000/v1/postcard/preview', {
+              credentials: 'include',
               method: 'POST',
               body: JSON.stringify(request),
               headers
@@ -223,7 +227,7 @@ class SignupComponent extends React.Component {
                     </Col>
                 </Row>
                 <Row>
-                    <Col className='col-xl-6 offset-xl-3 col-lg-8 offset-lg-2 col-md-8 offset-md-2 col-sm-12 text-left field px-1 mt-2'>
+                    <Col className='col-xl-6 offset-xl-3 col-lg-8 offset-lg-2 col-md-8 offset-md-2 col-sm-12 text-left field px-1 mt-3'>
                         <Label for="message">Message</Label>
                         {/*
                         // @ts-ignore */}
