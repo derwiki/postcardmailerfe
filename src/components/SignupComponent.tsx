@@ -167,7 +167,7 @@ class SignupComponent extends React.Component {
         }
 
         const postcardPreviewPost = (request: any) => {
-            const host = 'https://postcardmailerapi.herokuapp.com';
+            const host = process.env.REACT_APP_API_HOST;
             const path = '/v1/postcard/preview';
             fetch(`${host}${path}`, {
               credentials: 'include',
