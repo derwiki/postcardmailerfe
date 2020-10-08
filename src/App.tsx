@@ -4,12 +4,14 @@ import './App.css';
 import SignupComponent from './components/SignupComponent';
 import SigninComponent from './components/SigninComponent';
 import AboutComponent from './components/AboutComponent';
+import AddressesListComponent from './components/AddressesListComponent';
 
 const headers = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "access-control-allow-origin, access-control-allow-headers",
 };
 
+// TODO(derwiki) we're not using this right? rip it out
 const postcardPreviewPost = () => {
   fetch('https://postcardmailerapi.herokuapp.com/v1/postcard/preview', {
     method: 'POST',
@@ -69,6 +71,7 @@ const App = () => {
       <Container>
         <SignupComponent />
         <SigninComponent />
+        <AddressesListComponent />
         <AboutComponent />
       </Container>
     </div>
