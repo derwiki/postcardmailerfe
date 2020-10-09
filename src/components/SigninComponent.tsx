@@ -32,6 +32,7 @@ class SigninComponent extends React.Component<any, any> {
             method: 'POST',
             body: JSON.stringify(this.state),
             credentials: 'include',
+            referrerPolicy: 'origin-when-cross-origin',
             headers
         }).then(resp => this.loginSuccess(resp))
             .catch(resp => console.error('catch', resp));
