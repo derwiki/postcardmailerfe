@@ -13,6 +13,7 @@ class SigninComponent extends React.Component<any, any> {
         this.state = {
             email: '',
             password: '',
+            message: '',
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleFormChange = this.handleFormChange.bind(this);
@@ -20,7 +21,12 @@ class SigninComponent extends React.Component<any, any> {
     };
 
     loginSuccess(resp: any) {
-        console.log(resp);
+        console.log(`Status ${resp.status}, resp`, resp);
+        if (resp.status !== 200) {
+            this.setState({message: 'There was a problem logging in. Please check your email and password and try again.'})
+        } else {
+            this.setState({message: 'Logged in successfully!'})
+        }
     }
 
     handleSubmit(event: any) {
@@ -47,7 +53,7 @@ class SigninComponent extends React.Component<any, any> {
 
     render() {
         // @ts-ignore
-        const { email, password } = this.state;
+        const { email, password, message } = this.state;
 
         return (
             <Form className='w-100 pt-5' onSubmit={(values) => { this.handleSubmit(values) }}>
@@ -73,6 +79,13 @@ class SigninComponent extends React.Component<any, any> {
                         <Button color="secondary" size="xl">Sign in »</Button>
                     </Col>
                 </Row>
+                {message && (
+                    <Row>
+                        <Col className="text-center">
+                            {message}
+                        </Col>
+                    </Row>
+                )}
             </Form>
         );
     }

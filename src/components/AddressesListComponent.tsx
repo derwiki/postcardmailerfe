@@ -18,11 +18,13 @@ class AddressesListComponent extends React.Component<any, any> {
     };
 
     loginSuccess(resp: any) {
-        console.log(resp);
-        resp.json().then((r: any) => {
-            console.log(r);
-            this.setState({addresses: r});
-        });
+        if (resp.status !== 200) {
+            this.setState({message: "You are not logged in."});
+        } else {
+            resp.json().then((r: any) => {
+                this.setState({addresses: r, message: ''});
+            });
+        }
     }
 
     handleSubmit(event: any) {
@@ -39,20 +41,27 @@ class AddressesListComponent extends React.Component<any, any> {
     }
 
     render() {
-        // @ts-ignore
-        const { addresses } = this.state;
-        console.log('addresses', addresses)
+        const { addresses, message } = this.state;
 
         return (
             <Form className='w-100 pt-5' onSubmit={(values) => { this.handleSubmit(values) }}>
                 <Row>
                     <Col className='text-center pb-3'>Show Addresses</Col>
                 </Row>
-                <Row>
-                    <Col>
-                        {JSON.stringify(addresses)}
-                    </Col>
-                </Row>
+                {Object.keys(addresses).length > 0 && (
+                    <Row>
+                        <Col className='text-center'>
+                            {JSON.stringify(addresses)}
+                        </Col>
+                    </Row>
+                )}
+                {message?.length > 0 && (
+                    <Row>
+                        <Col className='text-center'>
+                            {message}
+                        </Col>
+                    </Row>
+                )}
                 <Row>
                     <Col className='col-xl-3 offset-xl-3 col-lg-4 offset-lg-2 col-md-4 offset-md-2 text-left px-1'>
                         <Button color="secondary" size="xl">Show Addresses »</Button>
