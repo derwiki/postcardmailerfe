@@ -42,20 +42,32 @@ class AddressesListComponent extends React.Component<any, any> {
 
     render() {
         const { addresses, message } = this.state;
+        const hasAddresses = Object.keys(addresses).length > 0;
+        const hasMessage = message?.length > 0;
 
         return (
             <Form className='w-100 pt-5' onSubmit={(values) => { this.handleSubmit(values) }}>
                 <Row>
                     <Col className='text-center pb-3'>Show Addresses</Col>
                 </Row>
-                {Object.keys(addresses).length > 0 && (
+                {hasAddresses && (
                     <Row>
                         <Col className='text-center'>
-                            {JSON.stringify(addresses)}
+                            {Object.keys(addresses).map((key: string) => {
+                                const address = addresses[key];
+                                const { AddressLine1, AddressLine2, City, State, Zip } = address;
+                                const label = [AddressLine1, AddressLine2, City, State, Zip].filter(item => item).join(', ')
+                                return (
+                                    <div>
+                                        {address.Name} &nbsp;
+                                        <span className="text-muted">{label}</span>
+                                    </div>
+                                )
+                            })}
                         </Col>
                     </Row>
                 )}
-                {message?.length > 0 && (
+                {hasMessage && (
                     <Row>
                         <Col className='text-center'>
                             {message}
