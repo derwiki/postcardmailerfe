@@ -11,50 +11,8 @@ const headers = {
   "Access-Control-Allow-Headers": "access-control-allow-origin, access-control-allow-headers",
 };
 
-// TODO(derwiki) we're not using this right? rip it out
-const postcardPreviewPost = () => {
-  fetch('https://postcardmailerapi.herokuapp.com/v1/postcard/preview', {
-    method: 'POST',
-    body: JSON.stringify(
-      {
-        "Front": "<html><body>Front</body></html>",
-        "Back": "<html><body>Back</body></html>",
-        "To": [
-          {
-            "Name": "Adam Derewecki",
-            "AddressLine1": "960 Wisconsin St",
-            "AddressLine2": "",
-            "City": "San Francisco",
-            "State": "CA",
-            "Zip": "94107"
-          },
-          {
-            "Name": "Edie Derewecki",
-            "AddressLine1": "609 Cambridge Road",
-            "AddressLine2": "",
-            "City": "Coshocton",
-            "State": "OH",
-            "Zip": "43812"
-          }
-        ],
-        "From": {
-          "Name": "Adam Derewecki",
-          "AddressLine1": "960 Wisconsin St",
-          "AddressLine2": "",
-          "City": "San Francisco",
-          "State": "CA",
-          "Zip": "94107"
-        }
-      }
-    ),
-    headers
-  }).then(response => response.json())
-    .then(respJson => console.log('then', respJson))
-    .catch(resp => console.error('catch', resp));
-}
 
 const App = () => {
-  //postcardPreviewPost();
 
   return (
     <div className="App">
