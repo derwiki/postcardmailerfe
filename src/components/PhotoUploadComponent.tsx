@@ -21,7 +21,7 @@ class PhotoUploadComponent extends React.Component<any, any> {
         managedUpload.on("httpUploadProgress", (progress: ManagedUpload.Progress) => {
             const uploadPercentProgress = `${Math.round(100 * progress.loaded / progress.total)}%`;
             this.setState({uploadPercentProgress});
-            if (progress.loaded == progress.total) {
+            if (progress.loaded === progress.total) {
                 console.log('finishedUploading');
                 setTimeout(() => this.setState({uploadPercentProgress: null, finishedUploading: true, photoUrl}), 500);
             }
@@ -47,7 +47,7 @@ class PhotoUploadComponent extends React.Component<any, any> {
         // @ts-ignore
         const {photoUrl, finishedUploading, uploadPercentProgress} = this.state;
         const maybePreview = finishedUploading ? (
-            <div><img src={photoUrl} width="500" height="375"></img></div>
+            <div><img src={photoUrl} width="500" height="375" alt="uploaded preview"></img></div>
         ) : null
 
         return (

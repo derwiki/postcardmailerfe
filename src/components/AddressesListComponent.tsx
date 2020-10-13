@@ -1,6 +1,6 @@
 import React from "react"
 import { Row, Col } from 'reactstrap';
-import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Button, Form, Label, Input } from 'reactstrap';
 
 const headers = {
     "Access-Control-Allow-Origin": "*",
