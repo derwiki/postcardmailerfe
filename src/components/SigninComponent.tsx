@@ -14,18 +14,20 @@ class SigninComponent extends React.Component<any, any> {
             email: '',
             password: '',
             message: '',
+            signedIn: false,
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleFormChange = this.handleFormChange.bind(this);
         this.loginSuccess = this.loginSuccess.bind(this);
+        this.handleSignout = this.handleSignout.bind(this);
     };
 
     loginSuccess(resp: any) {
         console.log(`Status ${resp.status}, resp`, resp);
         if (resp.status !== 200) {
-            this.setState({message: 'There was a problem logging in. Please check your email and password and try again.'})
+            this.setState({signedIn: false, message: 'There was a problem logging in. Please check your email and password and try again.'})
         } else {
-            this.setState({message: 'Logged in successfully!'})
+            this.setState({signedIn: true, message: 'Logged in successfully!'})
         }
     }
 
@@ -34,7 +36,9 @@ class SigninComponent extends React.Component<any, any> {
         console.log('Signin state', this.state);
         const host = process.env.REACT_APP_API_HOST;
         const path = '/v1/signin';
-        fetch(`${host}${path}`, {
+        const url = `${host}${path}`;
+        console.log('signin fetch', url);
+        fetch(url, {
             method: 'POST',
             body: JSON.stringify(this.state),
             credentials: 'include',
@@ -50,10 +54,14 @@ class SigninComponent extends React.Component<any, any> {
         this.setState({[target.name]: target.value});
     }
 
+    handleSignout(event: any) {
+
+    }
+
 
     render() {
         // @ts-ignore
-        const { email, password, message } = this.state;
+        const { email, password, message, signedIn } = this.state;
 
         return (
             <>
