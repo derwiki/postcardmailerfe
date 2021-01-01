@@ -82,11 +82,13 @@ class AddressesListComponent extends React.Component<any, any> {
                                     const { AddressLine1, AddressLine2, City, State, Zip } = address;
                                     const label = [AddressLine1, AddressLine2, City, State, Zip].filter(item => item).join(', ')
                                     return (
-                                        <Label check>
-                                            <Input type="checkbox" value={key} />{' '}
-                                            {address.Name} &nbsp;
-                                            <span className="text-muted">{label}</span>
-                                        </Label>
+                                        <div>
+                                            <Label check>
+                                                <Input type="checkbox" value={key} />{' '}
+                                                {address.Name} &nbsp;
+                                                <span className="text-muted">{label}</span>
+                                            </Label>
+                                        </div>
                                     )
                                 })}
                             </Col>
