@@ -9,6 +9,7 @@ class PhotoUploadComponent extends React.Component<any, any> {
         this.handleClick = this.handleClick.bind(this);
         this.state = {
             finishedUploading: false,
+            finalizingUpload: false,
             ...props.state
         };
     };
@@ -23,16 +24,17 @@ class PhotoUploadComponent extends React.Component<any, any> {
             this.setState({uploadPercentProgress});
             if (progress.loaded === progress.total) {
                 console.log('finishedUploading');
-                setTimeout(() => this.setState({uploadPercentProgress: null, finishedUploading: true, photoUrl}), 500);
+                this.setState({finalizingUpload: true})
             }
         })
         const promise = managedUpload.promise();
 
         promise.then(
-            function() {
+            () => {
                 console.log("Successfully uploaded photo.");
+                this.setState({uploadPercentProgress: null, finishedUploading: true, finalizingUpload: false, photoUrl});
             },
-            function(err: any) {
+            (err: any) => {
                 return console.log("There was an error uploading your photo: ", err.message);
             }
         );
@@ -45,7 +47,7 @@ class PhotoUploadComponent extends React.Component<any, any> {
     // this is rendering too soon because photoUrl is set before it's finished uploading
     render() {
         // @ts-ignore
-        const {photoUrl, finishedUploading, uploadPercentProgress} = this.state;
+        const {photoUrl, finishedUploading, uploadPercentProgress, finalizingUpload} = this.state;
         const maybePreview = finishedUploading ? (
             <div><img src={photoUrl} width="500" height="375" alt="uploaded preview"></img></div>
         ) : null
@@ -65,6 +67,9 @@ class PhotoUploadComponent extends React.Component<any, any> {
                             <Spinner color="primary" className='align-middle ml-2' />
                             <span className='align-baseline ml-2'>{uploadPercentProgress}</span>
                         </>
+                    )}
+                    {finalizingUpload && (
+                        <span className='align-baseline ml-2'>Finalizing upload</span>
                     )}
                 </div>
             </div>
