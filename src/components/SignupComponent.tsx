@@ -140,7 +140,7 @@ class SignupComponent extends React.Component {
                     const backThumbnail = BackThumbnails.Large;
                     const frontThumbnail = FrontThumbnails.Large;
                     const renderedPdf = RenderedPdf;
-                    setTimeout(() => this.setState({ backThumbnail, frontThumbnail, renderedPdf, previewRendering: false }), 1500);
+                    setTimeout(() => this.setState({ backThumbnail, frontThumbnail, renderedPdf, previewRendering: false, previewError: null }), 1500);
                     console.log('success backThumbnail', backThumbnail);
                     console.log('success frontThumbnail', frontThumbnail);
                 }
