@@ -18,7 +18,7 @@ class SignupNameAddressComponent extends React.Component<any, any> {
         return (
             <>
                 <Row>
-                    <Col className='col-xl-6 offset-xl-3 col-lg-8 offset-lg-2 col-md-8 offset-md-2 col-sm-12 text-left field px-1'>
+                    <Col  xl={{size: 6, offset: 3}} lg={{size: 8, offset: 2}} md={{size: 10, offset: 1}} >
                         <FormGroup>
                             <Label for="name">{labelPrefix} Name</Label>
                             <Input type="text" name={formPrefix + '_name'} id={formPrefix + '_name'} value={this.state[formPrefix + '_name']} className="form-control" placeholder="Ansel Adams" onChange={handleFormChange} />
@@ -26,31 +26,31 @@ class SignupNameAddressComponent extends React.Component<any, any> {
                     </Col>
                 </Row>
                 <Row>
-                <Col className='col-xl-4 offset-xl-3 col-lg-6 offset-lg-2 col-md-6 offset-md-2 col-sm-8 col-8 text-left field px-1'>
-                    <FormGroup>
-                        <Label for="name">{labelPrefix} Address</Label>
-                        <Input type="text" name={formPrefix + '_address1'} id={formPrefix + '_address1'} value={this.state[formPrefix + '_address1']} className="form-control" onChange={handleFormChange} />
-                    </FormGroup>
-                </Col>
-                <Col className='col-md-2 col-sm-4 col-4 text-left field px-1'>
-                    <FormGroup>
-                        <Label for="name">Unit/Apt</Label>
-                        <Input type="text" name={formPrefix + '_address2'} id={formPrefix + '_address2'} value={this.state[formPrefix + '_address2']} className="form-control" onChange={handleFormChange} />
-                    </FormGroup>
-                </Col>
+                    <Col xl={{size: 4, offset: 3}} lg={{size: 6, offset: 2}} md={{size: 6, offset: 1}} >
+                        <FormGroup>
+                            <Label for="name">{labelPrefix} Address</Label>
+                            <Input type="text" name={formPrefix + '_address1'} id={formPrefix + '_address1'} value={this.state[formPrefix + '_address1']} className="form-control" onChange={handleFormChange} />
+                        </FormGroup>
+                    </Col>
+                    <Col md={4} c >
+                        <FormGroup>
+                            <Label for="name">Unit/Apt</Label>
+                            <Input type="text" name={formPrefix + '_address2'} id={formPrefix + '_address2'} value={this.state[formPrefix + '_address2']} className="form-control" onChange={handleFormChange} />
+                        </FormGroup>
+                    </Col>
                 </Row>
                 <Row>
-                    <Col className='col-xl-3 offset-xl-3 col-lg-4 offset-lg-2 col-md-4 offset-md-2 col-sm-6 col-12 text-left field px-1 w-100'>
+                    <Col xl={{size: 3, offset: 3}} lg={{size: 4, offset: 2}} md={{size: 6, offset: 1}} sm={6}  >
                         <FormGroup>
                             <Label for="name">City</Label>
                             <Input type="text" name={formPrefix + '_city'} id={formPrefix + '_city'} value={this.state[formPrefix + '_city']}  className="form-control" onChange={handleFormChange} />
                         </FormGroup>
                     </Col>
-                    <Col className='col-md-2 text-left col-sm-4 col-6 field px-1'>
+                    <Col md={2} sm={4} >
                         <FormGroup>
                             <Label for="state">State</Label>
                             <select name={formPrefix + '_state'} id={formPrefix + '_state'} className="form-control" value={this.state[formPrefix + '_state']} onChange={handleFormChange} >
-                                <option value="">Select a US state</option>
+                                <option value="">Select &raquo;</option>
                                 <option value="AL">Alabama</option>
                                 <option value="AK">Alaska</option>
                                 <option value="AZ">Arizona</option>
@@ -106,7 +106,7 @@ class SignupNameAddressComponent extends React.Component<any, any> {
                             </select>
                         </FormGroup>
                     </Col>
-                    <Col className='col-xl-1 col-lg-2 col-md-2 text-left col-sm-2 col-6 field px-1'>
+                    <Col xl={1} lg={2} md={2} sm={2} >
                         <FormGroup>
                             <Label for="name">Zip</Label>
                             <Input type="text" name={formPrefix + '_postal_code'} id={formPrefix + '_postal_code'} className="form-control" value={this.state[formPrefix + '_postal_code']} onChange={handleFormChange}  />

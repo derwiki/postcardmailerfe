@@ -67,16 +67,18 @@ class SigninComponent extends React.Component<any, any> {
             <>
                 <Form className='w-100 pt-5' onSubmit={(values) => { this.handleSubmit(values) }}>
                     <Row>
-                        <Col className='text-center pb-3'>Already have an account?</Col>
+                        <Col xl={{size: 6, offset: 3}} lg={{size: 8, offset: 2}} md={{size: 10, offset: 1}}>
+                            <h2 className='pb-3'>Already have an account?</h2>
+                        </Col>
                     </Row>
                     <Row>
-                        <Col className='col-xl-3 offset-xl-3 col-lg-4 offset-lg-2 col-md-4 offset-md-2 text-left px-1'>
+                        <Col xl={{size: 3, offset: 3}} lg={{size: 4, offset: 2}} md={{size: 5, offset: 1}}>
                             <FormGroup>
                                 <Label for="email">Email</Label>
                                 <Input type="email" name="email" id="signin-email" value={email} onChange={this.handleFormChange}/>
                             </FormGroup>
                         </Col>
-                        <Col className='col-xl-3 col-lg-4 col-md-4 text-left px-1'>
+                        <Col xl={{size: 3}} lg={{size: 4}} md={{size: 5}}>
                             <FormGroup>
                                 <Label for="password">Password</Label>
                                 <Input type="password" name="password" id="signin-password" value={password} onChange={this.handleFormChange}/>
@@ -84,7 +86,7 @@ class SigninComponent extends React.Component<any, any> {
                         </Col>
                     </Row>
                     <Row>
-                        <Col className='col-xl-3 offset-xl-3 col-lg-4 offset-lg-2 col-md-4 offset-md-2 text-left px-1'>
+                        <Col xl={{size: 6, offset: 3}} lg={{size: 8, offset: 2}} md={{size: 10, offset: 1}}>
                             <Button color="secondary" size="xl">Sign in »</Button>
                         </Col>
                     </Row>

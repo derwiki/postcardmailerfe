@@ -1,53 +1,42 @@
 import React from "react"
 import { Row, Col, Spinner } from 'reactstrap';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
-import PhotoUploadComponent from "./PhotoUploadComponent";
-import SignupNameAddressComponent from "./SignupNameAddressComponent";
 
-class SignupComponent extends React.Component {
+class PostcardPreviewComponent extends React.Component<any, any> {
     constructor(props: any) {
         super(props);
-        this.state = {}
+        this.state = {addresses: props.addresses}
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleFormChange = this.handleFormChange.bind(this);
+        this.getSelectedRecipients = this.getSelectedRecipients.bind(this);
     };
+
+    // ideally this is not here.. violates principle of single responsibility
+    getSelectedRecipients() {
+        const recipients = [];
+        const checked = document.querySelectorAll('.addresses input[type=checkbox]:checked')
+        for (var key in Object.keys(checked)) {
+            const input = checked[key];
+            recipients.push(
+            // @ts-ignore
+            this.state.addresses[parseInt(input.value, 10)]
+            )
+        }
+        return recipients;
+    }
 
     handleSubmit(event: any) {
         event.preventDefault();
-        console.log('Signup state', this.state);
+        console.log("PostcardPreviewComponent state", this.state)
+        console.log("PostcardPreviewComponent getSelectedRecipients", this.getSelectedRecipients())
         // @ts-ignore
         const { message } = this.state;
+        const recipients = this.getSelectedRecipients();
+        console.log("HACK: using recipients[0]", recipients[0]);
+        const recipient = recipients[0];
         const request = {
-            To: [
-                {
-                    // @ts-ignore
-                    Name: this.state.to_name,
-                    // @ts-ignore
-                    AddressLine1: this.state.to_address1,
-                    // @ts-ignore
-                    AddressLine2: this.state.to_address2,
-                    // @ts-ignore
-                    City: this.state.to_city,
-                    // @ts-ignore
-                    State: this.state.to_state,
-                    // @ts-ignore
-                    Zip: this.state.to_postal_code,
-                },
-            ],
-            From: {
-                // @ts-ignore
-                Name: this.state.from_name,
-                // @ts-ignore
-                AddressLine1: this.state.from_address1,
-                // @ts-ignore
-                AddressLine2: this.state.from_address2,
-                // @ts-ignore
-                City: this.state.from_city,
-                // @ts-ignore
-                State: this.state.from_state,
-                // @ts-ignore
-                Zip: this.state.from_postal_code,
-            },
+            To: recipients,
+            From: recipient,
             UserId: 1,
             // @ts-ignore
             Back: `<html><body style='width: 1875px; height: 1350px; background: url(${window.photoUrl}); background-size: cover' /></html>`,
@@ -127,7 +116,6 @@ class SignupComponent extends React.Component {
         }
 
         const postcardPreviewPostSuccess = (resp: any) => {
-            console.log('postcardPreviewPostSuccess resp', resp);
             resp.json().then((r: any) => {
                 console.log('postcardPreviewPostSuccess', r)
                 if (r.Failures) {
@@ -193,18 +181,6 @@ class SignupComponent extends React.Component {
         const sendIt = backThumbnail && frontThumbnail ? (
             <Button color="primary" size="xl" className="mt-3">Send Now »</Button>
         ) : null;
-        const inlineSignup = backThumbnail && frontThumbnail ? (
-            <>
-                <FormGroup>
-                    <Label for="email">Email</Label>
-                    <Input type="email" name="email" id="signin-email" onChange={this.handleFormChange}/>
-                </FormGroup>
-                <FormGroup>
-                    <Label for="password">Password</Label>
-                    <Input type="password" name="password" id="signin-password" onChange={this.handleFormChange}/>
-                </FormGroup>
-            </>
-        ) : null;
 
         const maybeError = previewError ? (
             <div className="alert alert-danger">
@@ -213,27 +189,18 @@ class SignupComponent extends React.Component {
         ) : null;
 
         return (
-            <Form className='w-100' onSubmit={(values) => { this.handleSubmit(values) }} >
+            <Form className='w-100 mt-4' onSubmit={(values) => { this.handleSubmit(values) }} >
                 <Row>
-                    <Col xl={{size: 6, offset: 3}} lg={{size: 8, offset: 2}} md={{size: 10, offset: 1}} >
-                        <h2>Fill out the card</h2>
-                    </Col>
-                </Row>
-                <SignupNameAddressComponent labelPrefix={"Your"} formPrefix={"from"} state={this.state} handleFormChange={this.handleFormChange}/>
-                <SignupNameAddressComponent labelPrefix={"Recipient's"} formPrefix={"to"} state={this.state} handleFormChange={this.handleFormChange}/>
-                <Row>
-                    <PhotoUploadComponent onChange={this.handleFormChange} state={this.state} />
-                </Row>
-                <Row className="mt-4">
                     <Col xl={{size: 6, offset: 3}} lg={{size: 8, offset: 2}} md={{size: 10, offset: 1}} >
                         <h2>Write a message</h2>
                         <Label for="message">Size reflects printable area on postcard</Label>
+                        {/*
+                        // @ts-ignore */}
                         <Input style={{height: '5in', width: '2.25in'}} type="textarea" name="message" id="message" value={message} onChange={this.handleFormChange}/>
                         <Button color="secondary" size="xl" className="mt-3">Preview »</Button>
                         {maybeError}
                         {maybePreview}
                         {maybePreviewRendering}
-                        {inlineSignup}
                         {sendIt}
                     </Col>
                 </Row>
@@ -242,4 +209,4 @@ class SignupComponent extends React.Component {
     }
 }
 
-export default SignupComponent;
+export default PostcardPreviewComponent;

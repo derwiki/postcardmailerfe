@@ -1,5 +1,5 @@
 import React from "react";
-import { Input, Button, Spinner } from "reactstrap";
+import { Input, Button, Spinner, Col } from "reactstrap";
 import uploadPhoto from "../services/Aws";
 import { ManagedUpload } from "aws-sdk/clients/s3";
 
@@ -53,7 +53,7 @@ class PhotoUploadComponent extends React.Component<any, any> {
         ) : null
 
         return (
-            <div id="photoUploadComponent" className="mt-3">
+            <Col xl={{size: 6, offset: 3}} lg={{size: 8, offset: 2}} md={{size: 10, offset: 1}} id="photoUploadComponent" className="mt-4">
                 <h2>Choose a photo</h2>
                 <div className="mb-3">
                     <Input type="file" name="photoupload" id="photoupload" />
@@ -73,7 +73,7 @@ class PhotoUploadComponent extends React.Component<any, any> {
                         <span className='align-baseline ml-2'>Finalizing upload</span>
                     )}
                 </div>
-            </div>
+            </Col>
         )
     }
 }

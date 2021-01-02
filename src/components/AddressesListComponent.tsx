@@ -46,14 +46,14 @@ class AddressesListComponent extends React.Component<any, any> {
         return (
             <>
                 <Row>
-                    <Col className='text-center addresses'>
+                    <Col xl={{size: 6, offset: 3}} lg={{size: 8, offset: 2}} md={{size: 10, offset: 1}}  className='addresses'>
                     <h2>Select recipients</h2>
                         {Object.keys(addresses).map((key: string, idx: number) => {
                             const address = addresses[key];
                             const { AddressLine1, AddressLine2, City, State, Zip } = address;
                             const label = [AddressLine1, AddressLine2, City, State, Zip].filter(item => item).join(', ')
                             return (
-                                <div key={key}>
+                                <div key={key} className='pl-4'>
                                     <Label check>
                                         <Input type="checkbox" value={key} />{' '}
                                         {address.Name} &nbsp;
@@ -62,21 +62,6 @@ class AddressesListComponent extends React.Component<any, any> {
                                 </div>
                             )
                         })}
-                    </Col>
-                </Row>
-                <Row>
-                    <Col className='text-center'>
-                        <div> Selected </div>
-                        {hasRecipients && recipients.map(recipient => {
-                            return (
-                                <div>{recipient.Name}</div>
-                            )
-                        })}
-                    </Col>
-                </Row>
-                <Row>
-                    <Col className='text-center'>
-                        <Input type="submit" />
                     </Col>
                 </Row>
             </>
