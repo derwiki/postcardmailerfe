@@ -1,5 +1,4 @@
 import AWS from 'aws-sdk';
-import { exception } from 'console';
 
 const albumBucketName = "assets.postcardmailer.us";
 const bucketRegion = "us-east-1";
@@ -47,7 +46,7 @@ const uploadPhoto = (): UploadPhoto => {
     const files  = photoupload.files;
     if (!files.length) {
       // @ts-ignore
-      throw `Please choose a file to upload first`;
+      throw new Error(`Please choose a file to upload first`);
     }
     const file = files[0];
     const { name } = file;

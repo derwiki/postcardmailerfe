@@ -193,7 +193,7 @@ class SignupComponent extends React.Component {
         console.log('message', message);
         console.log('state', this.state);
         // @ts-ignore
-        const { backThumbnail, frontThumbnail, renderedPdf, previewError } = this.state;
+        const { backThumbnail, frontThumbnail, previewError } = this.state;
         const maybePreview = backThumbnail && frontThumbnail ? (
             <>
                 <div>
