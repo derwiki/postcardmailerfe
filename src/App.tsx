@@ -5,6 +5,7 @@ import SignupComponent from './components/SignupComponent';
 import SigninComponent from './components/SigninComponent';
 import NavbarComponent from './components/NavbarComponent';
 import AboutComponent from './components/AboutComponent';
+import HomepageComponent from './components/HomepageComponent';
 import AddressesListComponent from './components/AddressesListComponent';
 import UserContext from './components/UserComponent';
 
@@ -50,9 +51,7 @@ const App = () => {
           </Row>
         </Container>
         <Container>
-          <SignupComponent />
-          <SigninComponent />
-          <AddressesListComponent />
+          <HomepageComponent />
           <AboutComponent />
         </Container>
       </div>
