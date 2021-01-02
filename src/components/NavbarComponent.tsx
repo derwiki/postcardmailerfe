@@ -1,13 +1,9 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { Collapse, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from "reactstrap";
-import UserContext from "./UserComponent";
 
 function NavbarComponent(props: any) {
     const [isOpen, setIsOpen] = useState(false);
     const toggle = () => setIsOpen(!isOpen);
-    const user = useContext(UserContext);
-    const { isAuthenticated } = props;
-    console.log("NavbarComponent user", user)
 
     return (
         <div>
@@ -19,16 +15,12 @@ function NavbarComponent(props: any) {
                 <NavbarToggler onClick={toggle} />
                 <Collapse isOpen={isOpen} navbar>
                     <Nav className="mr-auto" navbar>
-                        {!isAuthenticated && (
-                            <NavItem>
-                                <NavLink href="#">Sign in</NavLink>
-                            </NavItem>
-                        )}
-                        {!isAuthenticated && (
-                            <NavItem>
-                                <NavLink href="#">Sign out</NavLink>
-                            </NavItem>
-                        )}
+                        <NavItem>
+                            <NavLink href="#">Sign in</NavLink>
+                        </NavItem>
+                        <NavItem>
+                            <NavLink href="#">Sign out</NavLink>
+                        </NavItem>
                     </Nav>
                 </Collapse>
             </Navbar>

@@ -11,7 +11,8 @@ class HomepageComponent extends React.Component<any, any> {
     constructor(props: any) {
         super(props);
         this.state = {
-            addresses: []
+            addresses: [],
+            addressesLoaded: false,
         }
         this.getAddresses = this.getAddresses.bind(this);
         this.loginSuccess = this.loginSuccess.bind(this);
@@ -19,13 +20,15 @@ class HomepageComponent extends React.Component<any, any> {
 
     loginSuccess(resp: any) {
         if (resp.status !== 200) {
+            console.log("HomepageComponent loginSuccess resp.status", resp.status)
             this.setState({message: "You are not logged in."});
         } else {
-            resp.json().then((r: any) => {
-                console.log('setState addresses', r);
-                this.setState({addresses: r, message: ''});
+            resp.json().then((addresses: any) => {
+                console.log('setState addresses', addresses);
+                this.setState({addresses: addresses});
             });
         }
+        this.setState({addressesLoaded: true});
     }
 
     getAddresses() {
@@ -47,12 +50,19 @@ class HomepageComponent extends React.Component<any, any> {
 
     render() {
         console.log('HomepageComponent render')
-        const { addresses } = this.state;
+        const { addresses, addressesLoaded } = this.state;
         const hasAddresses = Object.keys(addresses).length > 0;
+
+        if (!addressesLoaded) {
+            return (
+                <>
+                </>
+            )
+        }
 
         return (
            <>
-               {hasAddresses ? <HomepageLoggedInComponent /> : <HomepageLoggedOutComponent />}
+               {hasAddresses ? <HomepageLoggedInComponent addresses={addresses} /> : <HomepageLoggedOutComponent />}
            </>
         );
     }

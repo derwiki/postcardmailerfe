@@ -2,7 +2,6 @@ import React from 'react';
 import { Container, Row, Col } from 'reactstrap';
 import './App.css';
 import NavbarComponent from './components/NavbarComponent';
-import AboutComponent from './components/AboutComponent';
 import HomepageComponent from './components/HomepageComponent';
 
 
@@ -22,7 +21,6 @@ const App = () => {
         </Container>
         <Container>
           <HomepageComponent />
-          <AboutComponent />
         </Container>
       </div>
   );

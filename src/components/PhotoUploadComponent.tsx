@@ -54,6 +54,7 @@ class PhotoUploadComponent extends React.Component<any, any> {
 
         return (
             <div id="photoUploadComponent" className="mt-3">
+                <h2>Choose a photo</h2>
                 <div className="mb-3">
                     <Input type="file" name="photoupload" id="photoupload" />
                 </div>

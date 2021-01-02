@@ -1,6 +1,7 @@
 import React from "react"
 import SigninComponent from "./SigninComponent"
 import SignupComponent from "./SignupComponent"
+import AboutComponent from "./AboutComponent"
 
 
 class HomepageLoggedOutComponent extends React.Component<any, any> {
@@ -11,6 +12,7 @@ class HomepageLoggedOutComponent extends React.Component<any, any> {
            <>
             <SignupComponent />
             <SigninComponent />
+            <AboutComponent />
            </>
         );
     }

@@ -7,26 +7,6 @@ import SignupNameAddressComponent from "./SignupNameAddressComponent";
 class SignupComponent extends React.Component {
     constructor(props: any) {
         super(props);
-        // TODO(derwiki) need to use useState ??
-        /*
-        this.state = {
-            email: '',
-            password: '',
-            to_name: 'Adam Derewecki',
-            to_address1: '960 Wisconsin St',
-            to_address2: '',
-            to_city: 'San Francisco',
-            to_state: 'CA',
-            to_postal_code: '94107',
-            from_name: 'Adam Derewecki',
-            from_address1: '960 Wisconsin St',
-            from_address2: '',
-            from_city: 'San Francisco',
-            from_state: 'CA',
-            from_postal_code: '94107',
-            message: 'Small batch trust fund chambray vaporware lumbersexual deep v. Vaporware hexagon post-ironic pour-over green juice sustainable intelligentsia tbh tilde organic normcore cliche hoodie air plant mustache. Butcher iPhone post-ironic lo-fi tacos, tumeric neutra vaporware 8-bit activated charcoal tumblr leggings copper mug aesthetic meh.  Butcher iPhone post-ironic lo-fi tacos, tumeric neutra vaporware 8-bit activated charcoal!',
-        };
-        */
         this.state = {}
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleFormChange = this.handleFormChange.bind(this);
