@@ -49,7 +49,7 @@ class PhotoUploadComponent extends React.Component<any, any> {
         // @ts-ignore
         const {photoUrl, finishedUploading, uploadPercentProgress, finalizingUpload} = this.state;
         const maybePreview = finishedUploading ? (
-            <div><img src={photoUrl} width="500" height="375" alt="uploaded preview"></img></div>
+            <div><img src={photoUrl} className="w-100" alt="uploaded preview"></img></div>
         ) : null
 
         return (

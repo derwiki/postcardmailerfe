@@ -178,10 +178,10 @@ class SignupComponent extends React.Component {
         const maybePreview = backThumbnail && frontThumbnail ? (
             <>
                 <div>
-                    <img src={backThumbnail} alt="back thumbnail"></img>
+                    <img src={backThumbnail} alt="back thumbnail" className="w-100"></img>
                 </div>
                 <div>
-                    <img src={frontThumbnail} alt="front thumbnail"></img>
+                    <img src={frontThumbnail} alt="front thumbnail" className="w-100"></img>
                 </div>
             </>
         ) : null;
