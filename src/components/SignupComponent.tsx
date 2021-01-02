@@ -1,6 +1,6 @@
 import React from "react"
 import { Row, Col, Spinner } from 'reactstrap';
-import { Button, Form, Label, Input } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import PhotoUploadComponent from "./PhotoUploadComponent";
 import SignupNameAddressComponent from "./SignupNameAddressComponent";
 
@@ -212,6 +212,22 @@ class SignupComponent extends React.Component {
         const sendIt = backThumbnail && frontThumbnail ? (
             <Button color="primary" size="xl" className="mt-3">Send Now »</Button>
         ) : null;
+        const inlineSignup = backThumbnail && frontThumbnail ? (
+            <Row>
+                <Col className='col-xl-3 offset-xl-3 col-lg-4 offset-lg-2 col-md-4 offset-md-2 text-left px-1'>
+                    <FormGroup>
+                        <Label for="email">Email</Label>
+                        <Input type="email" name="email" id="signin-email" onChange={this.handleFormChange}/>
+                    </FormGroup>
+                </Col>
+                <Col className='col-xl-3 col-lg-4 col-md-4 text-left px-1'>
+                    <FormGroup>
+                        <Label for="password">Password</Label>
+                        <Input type="password" name="password" id="signin-password" onChange={this.handleFormChange}/>
+                    </FormGroup>
+                </Col>
+            </Row>
+        ) : null;
 
         const maybeError = previewError ? (
             <div className="alert alert-danger">
@@ -248,6 +264,7 @@ class SignupComponent extends React.Component {
                         {maybePreviewRendering}
                     </Col>
                 </Row>
+                {inlineSignup}
                 <Row>
                     <Col className='col-xl-3 offset-xl-3 col-lg-4 offset-lg-2 col-md-4 offset-md-2 text-left px-1'>
                         {sendIt}
