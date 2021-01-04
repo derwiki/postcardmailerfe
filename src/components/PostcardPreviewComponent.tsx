@@ -189,22 +189,24 @@ class PostcardPreviewComponent extends React.Component<any, any> {
         ) : null;
 
         return (
-            <Form className='w-100 mt-4' onSubmit={(values) => { this.handleSubmit(values) }} >
-                <Row>
-                    <Col xl={{size: 6, offset: 3}} lg={{size: 8, offset: 2}} md={{size: 10, offset: 1}} >
-                        <h2>Write a message</h2>
-                        <Label for="message">Size reflects printable area on postcard</Label>
-                        {/*
-                        // @ts-ignore */}
-                        <Input style={{height: '5in', width: '2.25in'}} type="textarea" name="message" id="message" value={message} onChange={this.handleFormChange}/>
-                        <Button color="secondary" size="xl" className="mt-3">Preview »</Button>
-                        {maybeError}
-                        {maybePreview}
-                        {maybePreviewRendering}
-                        {sendIt}
-                    </Col>
-                </Row>
-            </Form>
+            <>
+                <Form className='w-100 mt-4' onSubmit={(values) => { this.handleSubmit(values) }} >
+                    <Row>
+                        <Col xl={{size: 6, offset: 3}} lg={{size: 8, offset: 2}} md={{size: 10, offset: 1}} >
+                            <h2>Write a message</h2>
+                            <Label for="message">Size reflects printable area on postcard</Label>
+                            {/*
+                            // @ts-ignore */}
+                            <Input style={{height: '5in', width: '2.25in'}} type="textarea" name="message" id="message" value={message} onChange={this.handleFormChange}/>
+                            <Button color="secondary" size="xl" className="mt-3">Preview »</Button>
+                            {maybeError}
+                            {maybePreview}
+                            {maybePreviewRendering}
+                        </Col>
+                    </Row>
+                </Form>
+                {sendIt}
+            </>
         );
     }
 }
