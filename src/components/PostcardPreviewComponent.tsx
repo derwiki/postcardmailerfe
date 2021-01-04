@@ -17,6 +17,7 @@ class PostcardPreviewComponent extends React.Component<any, any> {
         this.getSelectedRecipients = this.getSelectedRecipients.bind(this);
         this.postcardPreviewPostSuccess = this.postcardPreviewPostSuccess.bind(this);
         this.apiRequest = this.apiRequest.bind(this);
+        this.handleSendIt = this.handleSendIt.bind(this);
     };
 
     // ideally this is not here.. violates principle of single responsibility
@@ -158,6 +159,22 @@ class PostcardPreviewComponent extends React.Component<any, any> {
             .catch(resp => console.error('catch', resp));
     }
 
+    handleSendIt(event: any) {
+        event.preventDefault();
+        console.log("PostcardPreviewComponent send state", this.state)
+        console.log("PostcardPreviewComponent send getSelectedRecipients", this.getSelectedRecipients())
+        // @ts-ignore
+        const recipients = this.getSelectedRecipients();
+        console.log("send HACK: using recipients[0]", recipients[0]);
+        const recipient = recipients[0];
+        const request = this.buildRequest(recipients, recipient, this.state.message)
+        this.setState({previewRendering: true});
+        this.apiRequest('/v1/postcard/send', request)
+            .catch(resp => console.error('catch', resp))
+            .then((resp: any) => {
+                this.postcardPreviewPostSuccess(resp)
+            })
+    }
 
 
 
@@ -190,7 +207,7 @@ class PostcardPreviewComponent extends React.Component<any, any> {
         ) : null;
 
         const sendIt = backThumbnail && frontThumbnail ? (
-            <Button color="primary" size="xl" className="mt-3">Send Now »</Button>
+            <Button color="primary" size="xl" className="mt-3" onClick={this.handleSendIt}>Send Now »</Button>
         ) : null;
 
         const maybeError = previewError ? (
