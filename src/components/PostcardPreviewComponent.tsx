@@ -16,6 +16,7 @@ class PostcardPreviewComponent extends React.Component<any, any> {
         this.handleFormChange = this.handleFormChange.bind(this);
         this.getSelectedRecipients = this.getSelectedRecipients.bind(this);
         this.postcardPreviewPostSuccess = this.postcardPreviewPostSuccess.bind(this);
+        this.apiRequest = this.apiRequest.bind(this);
     };
 
     // ideally this is not here.. violates principle of single responsibility
@@ -132,6 +133,16 @@ class PostcardPreviewComponent extends React.Component<any, any> {
         })
     }
 
+    apiRequest(path: string, request: any) {
+        const host = process.env.REACT_APP_API_HOST;
+        return fetch(`${host}${path}`, {
+            credentials: 'include',
+            method: 'POST',
+            body: JSON.stringify(request),
+            headers
+        })
+    }
+
     handleSubmit(event: any) {
         event.preventDefault();
         console.log("PostcardPreviewComponent state", this.state)
@@ -141,19 +152,10 @@ class PostcardPreviewComponent extends React.Component<any, any> {
         console.log("HACK: using recipients[0]", recipients[0]);
         const recipient = recipients[0];
         const request = this.buildRequest(recipients, recipient, this.state.message)
-        const postcardPreviewPost = (request: any) => {
-            const host = process.env.REACT_APP_API_HOST;
-            const path = '/v1/postcard/preview';
-            fetch(`${host}${path}`, {
-              credentials: 'include',
-              method: 'POST',
-              body: JSON.stringify(request),
-              headers
-            }).then(resp => this.postcardPreviewPostSuccess(resp))
-              .catch(resp => console.error('catch', resp));
-        }
         this.setState({previewRendering: true});
-        postcardPreviewPost(request);
+        this.apiRequest('/v1/postcard/preview', request)
+            .then(resp => this.postcardPreviewPostSuccess(resp))
+            .catch(resp => console.error('catch', resp));
     }
 
 
