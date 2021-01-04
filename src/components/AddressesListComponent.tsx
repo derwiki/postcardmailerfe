@@ -1,11 +1,6 @@
 import React from "react"
 import { Row, Col } from 'reactstrap';
-import { Button, Form, Label, Input } from 'reactstrap';
-
-const headers = {
-    "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Headers": "access-control-allow-origin, access-control-allow-headers",
-}
+import { Label, Input } from 'reactstrap';
 
 class AddressesListComponent extends React.Component<any, any> {
     constructor(props: any) {
@@ -38,10 +33,7 @@ class AddressesListComponent extends React.Component<any, any> {
     }
 
     render() {
-        const { addresses, message } = this.state;
-        const hasMessage = message?.length > 0;
-        const recipients = this.getSelectedRecipients();
-        const hasRecipients = recipients?.length > 0;
+        const { addresses } = this.state;
 
         return (
             <>

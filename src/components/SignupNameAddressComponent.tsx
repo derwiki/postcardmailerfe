@@ -32,7 +32,7 @@ class SignupNameAddressComponent extends React.Component<any, any> {
                             <Input type="text" name={formPrefix + '_address1'} id={formPrefix + '_address1'} value={this.state[formPrefix + '_address1']} className="form-control" onChange={handleFormChange} />
                         </FormGroup>
                     </Col>
-                    <Col md={4} c >
+                    <Col md={4} >
                         <FormGroup>
                             <Label for="name">Unit/Apt</Label>
                             <Input type="text" name={formPrefix + '_address2'} id={formPrefix + '_address2'} value={this.state[formPrefix + '_address2']} className="form-control" onChange={handleFormChange} />
