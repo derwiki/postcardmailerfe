@@ -1,6 +1,12 @@
 import React from "react"
 import { Row, Col, Spinner } from 'reactstrap';
-import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Button, Form, Label, Input } from 'reactstrap';
+
+
+const headers = {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Headers": "access-control-allow-origin, access-control-allow-headers",
+}
 
 class PostcardPreviewComponent extends React.Component<any, any> {
     constructor(props: any) {
@@ -9,6 +15,7 @@ class PostcardPreviewComponent extends React.Component<any, any> {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleFormChange = this.handleFormChange.bind(this);
         this.getSelectedRecipients = this.getSelectedRecipients.bind(this);
+        this.postcardPreviewPostSuccess = this.postcardPreviewPostSuccess.bind(this);
     };
 
     // ideally this is not here.. violates principle of single responsibility
@@ -25,18 +32,11 @@ class PostcardPreviewComponent extends React.Component<any, any> {
         return recipients;
     }
 
-    handleSubmit(event: any) {
-        event.preventDefault();
-        console.log("PostcardPreviewComponent state", this.state)
-        console.log("PostcardPreviewComponent getSelectedRecipients", this.getSelectedRecipients())
-        // @ts-ignore
-        const { message } = this.state;
-        const recipients = this.getSelectedRecipients();
-        console.log("HACK: using recipients[0]", recipients[0]);
-        const recipient = recipients[0];
+
+    buildRequest(recipients: any, sender: any, message: string) {
         const request = {
             To: recipients,
-            From: recipient,
+            From: sender,
             UserId: 1,
             // @ts-ignore
             Back: `<html><body style='width: 1875px; height: 1350px; background: url(${window.photoUrl}); background-size: cover' /></html>`,
@@ -109,32 +109,38 @@ class PostcardPreviewComponent extends React.Component<any, any> {
             </html>`,
         }
         console.log(request);
+        return request;
+    }
 
-        const headers = {
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Headers": "access-control-allow-origin, access-control-allow-headers",
-        }
+    postcardPreviewPostSuccess(resp: any) {
+        resp.json().then((r: any) => {
+            console.log('postcardPreviewPostSuccess', r)
+            if (r.Failures) {
+                const { Error } = r['Failures'][0];
+                console.log('failure Error', Error);
+                this.setState({previewError: Error, previewRendering: false})
+            } else {
+                const { RenderedPdf, FrontThumbnails, BackThumbnails } = r['Successes'][0];
+                console.log('success RenderedPdf', RenderedPdf);
+                const backThumbnail = BackThumbnails.Large;
+                const frontThumbnail = FrontThumbnails.Large;
+                const renderedPdf = RenderedPdf;
+                setTimeout(() => this.setState({ backThumbnail, frontThumbnail, renderedPdf, previewRendering: false }), 1500);
+                console.log('success backThumbnail', backThumbnail);
+                console.log('success frontThumbnail', frontThumbnail);
+            }
+        })
+    }
 
-        const postcardPreviewPostSuccess = (resp: any) => {
-            resp.json().then((r: any) => {
-                console.log('postcardPreviewPostSuccess', r)
-                if (r.Failures) {
-                    const { Error } = r['Failures'][0];
-                    console.log('failure Error', Error);
-                    this.setState({previewError: Error, previewRendering: false})
-                } else {
-                    const { RenderedPdf, FrontThumbnails, BackThumbnails } = r['Successes'][0];
-                    console.log('success RenderedPdf', RenderedPdf);
-                    const backThumbnail = BackThumbnails.Large;
-                    const frontThumbnail = FrontThumbnails.Large;
-                    const renderedPdf = RenderedPdf;
-                    setTimeout(() => this.setState({ backThumbnail, frontThumbnail, renderedPdf, previewRendering: false }), 1500);
-                    console.log('success backThumbnail', backThumbnail);
-                    console.log('success frontThumbnail', frontThumbnail);
-                }
-            })
-        }
-
+    handleSubmit(event: any) {
+        event.preventDefault();
+        console.log("PostcardPreviewComponent state", this.state)
+        console.log("PostcardPreviewComponent getSelectedRecipients", this.getSelectedRecipients())
+        // @ts-ignore
+        const recipients = this.getSelectedRecipients();
+        console.log("HACK: using recipients[0]", recipients[0]);
+        const recipient = recipients[0];
+        const request = this.buildRequest(recipients, recipient, this.state.message)
         const postcardPreviewPost = (request: any) => {
             const host = process.env.REACT_APP_API_HOST;
             const path = '/v1/postcard/preview';
@@ -143,12 +149,15 @@ class PostcardPreviewComponent extends React.Component<any, any> {
               method: 'POST',
               body: JSON.stringify(request),
               headers
-            }).then(resp => postcardPreviewPostSuccess(resp))
+            }).then(resp => this.postcardPreviewPostSuccess(resp))
               .catch(resp => console.error('catch', resp));
         }
         this.setState({previewRendering: true});
         postcardPreviewPost(request);
     }
+
+
+
 
     handleFormChange(form: any) {
         const {target} = form;
